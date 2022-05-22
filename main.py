@@ -3,9 +3,11 @@ import sys
 import wget
 import zipfile
 import tarfile
+from subprocess import call
 
 # ------------------VARIABLES----------------------------------------------------------
 # Variable de JDK para windows.
+# Es necesario realizar pruebas, asi que se usaran urls con archivos mas ligeros
 jdk_list = {
     "jdk_9": "https://download.java.net/java/GA/jdk9/9.0.4/binaries/openjdk-9.0.4_windows-x64_bin.tar.gz",
     "jdk_10": "https://download.java.net/java/GA/jdk10/10.0.2/19aef61b38124481863b1413dce1855f/13/openjdk-10.0.2_windows-x64_bin.tar.gz",
@@ -18,12 +20,66 @@ jdk_list = {
     "jdk_17": "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip",
     "jdk_18": "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip",
 }
-
+# jdk_list de prueba
+"""
+jdk_list = {
+    "jdk_11": "https://github.com/coreybutler/nvm-windows/releases/download/1.1.9/nvm-setup.zip"
+}
+"""
 
 # ------------------------------------FUNCIONES--------------------------------------
 def run():
-    pass
-    
+    while True:
+        command = input("Enter the mjdk command:\n      type exit to close the program.")
+        if "install" in command:
+            jdk = ("install", command.removeprefix("install "))
+        elif "use" in command:
+            jdk = ("use", command.removeprefix("use "))
+        else:
+            print("Type a valid command\n   type -h or -help to get a list of commands that can be used.")
+            return
+
+        # jdk_name("Aqui elnombre del jdk", "Aqui la extencion del archivo comprimido")
+        jdk_name = detect_jdk(jdk[1])
+
+        if jdk_name:
+            if jdk[0] == "install":
+                install(jdk_name[0], jdk_name[1])
+            elif jdk[0] == "use":
+                use(jdk_name[0])
+            elif jdk[0].lower() == "exit":
+                break
+
+
+def detect_jdk(i):
+    i = i.lower()
+    file = ".zip"
+    if i == "jdk_9" or i == "9" or i == "jdk9" or i == "jdk=9" or i == "jdk@9":
+        i = "jdk_9"
+        file = ".tar.gz"
+    elif i == "jdk_10" or i == "10" or i == "jdk10" or i == "jdk=10" or i == "jdk@10":
+        i = "jdk_10"
+        file = ".tar.gz"
+    elif i == "jdk_11" or i == "11" or i == "jdk11" or i == "jdk=11" or i == "jdk@11":
+        i = "jdk_11"
+    elif i == "jdk_12" or i == "12" or i == "jdk12" or i == "jdk=12" or i == "jdk@12":
+        i = "jdk_12"
+    elif i == "jdk_13" or i == "13" or i == "jdk13" or i == "jdk=13" or i == "jdk@13":
+        i = "jdk_13"
+    elif i == "jdk_14" or i == "14" or i == "jdk14" or i == "jdk=14" or i == "jdk@14":
+        i = "jdk_14"
+    elif i == "jdk_15" or i == "15" or i == "jdk15" or i == "jdk=15" or i == "jdk@15":
+        i = "jdk_15"
+    elif i == "jdk_16" or i == "16" or i == "jdk16" or i == "jdk=16" or i == "jdk@16":
+        i = "jdk_16"
+    elif i == "jdk_17" or i == "17" or i == "jdk17" or i == "jdk=17" or i == "jdk@17":
+        i = "jdk_17"
+    elif i == "jdk_18" or i == "18" or i == "jdk18" or i == "jdk=18" or i == "jdk@18":
+        i = "jdk_18"
+    else:
+        print("Enter a valid JDK version.")
+        return None
+    return (i, file)
 
 
 def ruta():
@@ -32,50 +88,41 @@ def ruta():
     return os.path.abspath('.')
 
 
-def install():
-    i = input("Enter the JDK version to install:")
-    
-    
-    file = "zip"
-    if i == "jdk_9" or i == "9" or i == "jdk9" or i == "jdk=9" or i == "jdk@9":
-        file = "tar.gz"
-    elif i == "jdk_10" or i == "10" or i == "jdk10" or i == "jdk=10" or i == "jdk@10":
-        file = "tar.gz"
-    elif i == "jdk_11" or i == "11" or i == "jdk11" or i == "jdk=11" or i == "jdk@11":
-        pass
-    elif i == "jdk_12" or i == "12" or i == "jdk12" or i == "jdk=12" or i == "jdk@12":
-        pass
-    elif i == "jdk_13" or i == "13" or i == "jdk13" or i == "jdk=13" or i == "jdk@13":
-        pass
-    elif i == "jdk_14" or i == "14" or i == "jdk14" or i == "jdk=14" or i == "jdk@14":
-        pass
-    elif i == "jdk_15" or i == "15" or i == "jdk15" or i == "jdk=15" or i == "jdk@15":
-        pass
-    elif i == "jdk_16" or i == "16" or i == "jdk16" or i == "jdk=16" or i == "jdk@16":
-        pass
-    elif i == "jdk_17" or i == "17" or i == "jdk17" or i == "jdk=17" or i == "jdk@17":
-        pass
-    elif i == "jdk_18" or i == "18" or i == "jdk18" or i == "jdk=18" or i == "jdk@18":
-        pass
-    else:
-        print("Enter a valid JDK version.")
+def install(i, file):
+    if os.path.exists(i):
+        print("The jdk is already installed.\n")
         return
-
-    print("Downloading " + jdk_list[i])
-    path_file = ruta() + "/" + i + file
-    wget.download(jdk_list[i], path_file)
+    else:
+        file_name = i + file
+        if os.path.exists(file_name):
+            os.remove(file_name)
+        print("Downloading " + jdk_list[i])
+        wget.download(jdk_list[i], file_name)
 
     print("Extracting...")
-    if file == "zip":
-        result = extract_zip(path_file, i)
+    if file == ".zip":
+        result = extract_zip(file_name, i)
     else:
-        result = extract_tar(path_file, i)
+        result = extract_tar(file_name, i)
 
     if result:
-        print("Extracted file.\n")
+        print("Jdk extracted.")
+
+        print("To use the jdk type 'mjdk use " + i + "'\n")
+
+
+def use(jdk_name):
+    if not os.path.exists(jdk_name):
+        print("Error, jdk is not installed.")
+        return False
+    else:
+        ruta_jdk = ruta() + "/" + jdk_name
+        call("setx JAVA_HOME " + ruta_jdk)
+        call("setx PATH %PATH%;%JAVA_HOME%")
+        print(jdk_name + "it is now in use.")
+
 
 def extract_tar(jdk_name, dir):
-
     if tarfile.is_tarfile():
         z = tarfile.open(jdk_name)
         try:
