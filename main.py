@@ -30,13 +30,13 @@ jdk_list = {
 # ------------------------------------FUNCIONES--------------------------------------
 def run():
     while True:
-        command = input("Enter the mjdk command:\n      type exit to close the program.")
+        command = input("Enter the mjdk command:")
         if "install" in command:
             jdk = ("install", command.removeprefix("install "))
         elif "use" in command:
             jdk = ("use", command.removeprefix("use "))
         else:
-            print("Type a valid command\n   type -h or -help to get a list of commands that can be used.")
+            print("Type a valid command\ntype -h or -help to get a list of commands that can be used.")
             return
 
         # jdk_name("Aqui elnombre del jdk", "Aqui la extencion del archivo comprimido")
@@ -47,8 +47,16 @@ def run():
                 install(jdk_name[0], jdk_name[1])
             elif jdk[0] == "use":
                 use(jdk_name[0])
+            elif jdk[0] == "-h" or jdk[0] == "-help":
+                print("""
+                    install [jdk-version]           Allows to download the jdk, needs to be specified the version.
+                    use [jdk-version]               Sets the jdk to use, needs the version to be specified.
+                    exit                            close the program.
+
+                    """)
             elif jdk[0].lower() == "exit":
                 break
+
 
 
 def detect_jdk(i):
