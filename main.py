@@ -2,6 +2,7 @@ import os
 import sys
 import wget
 import zipfile
+import tarfile
 
 # ------------------VARIABLES----------------------------------------------------------
 # Variable de JDK para windows.
@@ -21,8 +22,8 @@ jdk_list = {
 
 # ------------------------------------FUNCIONES--------------------------------------
 def run():
-    jdk_install = input("Introduce la version JDK a usar:")
-    download(jdk_install)
+    pass
+    
 
 
 def ruta():
@@ -31,68 +32,79 @@ def ruta():
     return os.path.abspath('.')
 
 
-def download(i):
+def install():
+    i = input("Enter the JDK version to install:")
+    
+    
+    file = "zip"
     if i == "jdk_9" or i == "9" or i == "jdk9" or i == "jdk=9" or i == "jdk@9":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".tar.gz"))
-        print("Extracting...")
+        file = "tar.gz"
     elif i == "jdk_10" or i == "10" or i == "jdk10" or i == "jdk=10" or i == "jdk@10":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".tar.gz"))
-        print("Extracting...")
-
+        file = "tar.gz"
     elif i == "jdk_11" or i == "11" or i == "jdk11" or i == "jdk=11" or i == "jdk@11":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".zip"))
-        print("Extracting...")
-
+        pass
     elif i == "jdk_12" or i == "12" or i == "jdk12" or i == "jdk=12" or i == "jdk@12":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".zip"))
-        print("Extracting...")
+        pass
     elif i == "jdk_13" or i == "13" or i == "jdk13" or i == "jdk=13" or i == "jdk@13":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".zip"))
-        print("Extracting...")
+        pass
     elif i == "jdk_14" or i == "14" or i == "jdk14" or i == "jdk=14" or i == "jdk@14":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".zip"))
-        print("Extracting...")
+        pass
     elif i == "jdk_15" or i == "15" or i == "jdk15" or i == "jdk=15" or i == "jdk@15":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".zip"))
-        print("Extracting...")
+        pass
     elif i == "jdk_16" or i == "16" or i == "jdk16" or i == "jdk=16" or i == "jdk@16":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".zip"))
-        print("Extracting...")
+        pass
     elif i == "jdk_17" or i == "17" or i == "jdk17" or i == "jdk=17" or i == "jdk@17":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".zip"))
-        print("Extracting...")
+        pass
     elif i == "jdk_18" or i == "18" or i == "jdk18" or i == "jdk=18" or i == "jdk@18":
-        print("Downloading " + jdk_list[i])
-        wget.download(jdk_list[i], str(ruta() + "/" + i + ".zip"))
-        print("Extracting...")
+        pass
     else:
-        print("Introduce una version JDK valida.")
-        print(ruta())
+        print("Enter a valid JDK version.")
         return
 
+    print("Downloading " + jdk_list[i])
+    path_file = ruta() + "/" + i + file
+    wget.download(jdk_list[i], path_file)
 
-def extraer_zip(jdk_name):
+    print("Extracting...")
+    if file == "zip":
+        result = extract_zip(path_file, i)
+    else:
+        result = extract_tar(path_file, i)
+
+    if result:
+        print("Extracted file.\n")
+
+def extract_tar(jdk_name, dir):
+
+    if tarfile.is_tarfile():
+        z = tarfile.open(jdk_name)
+        try:
+            z.extractall(dir)
+            return True
+        except Exception as e:
+            print("Error", e)
+            return False
+        z.close()
+    else:
+        print("Error, the tar.gz file is not valid.")
+        return False
+
+
+def extract_zip(jdk_name, dir):
     if zipfile.is_zipfile(jdk_name):
 
         z = zipfile.ZipFile(jdk_name, "r")
         try:
-            z.extractall(pwd=None, path=ruta() + "/" + jdk_name + "/")
-        except:
-            print('Error')
-            pass
+            z.extractall(pwd=None, path=ruta() + "/" + dir + "/")
+            return True
+        except Exception as e:
+            print("Error", e)
+            return False
         z.close()
 
     else:
-        print("Error, el archivo zip no es valido.")
+        print("Error, the zip file is not valid.")
+        return False
 
 
 if __name__ == '__main__':
