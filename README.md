@@ -1,0 +1,2 @@
+# mjdk
+Manager JDK
