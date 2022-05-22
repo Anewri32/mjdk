@@ -35,9 +35,20 @@ def run():
             jdk = ("install", command.removeprefix("install "))
         elif "use" in command:
             jdk = ("use", command.removeprefix("use "))
+
+        elif command == "-h" or command == "-help":
+            print("""
+                install [jdk-version]           Allows to download the jdk, needs to be specified the version.
+                use [jdk-version]               Sets the jdk to use, needs the version to be specified.
+                exit                            close the program.
+
+                """)
+            continue
+        elif command.lower() == "exit":
+            break
         else:
-            print("Type a valid command\ntype -h or -help to get a list of commands that can be used.")
-            return
+            print("Error, type a valid command\ntype -h or -help to get a list of commands that can be used.\n")
+            continue
 
         # jdk_name("Aqui elnombre del jdk", "Aqui la extencion del archivo comprimido")
         jdk_name = detect_jdk(jdk[1])
@@ -47,15 +58,6 @@ def run():
                 install(jdk_name[0], jdk_name[1])
             elif jdk[0] == "use":
                 use(jdk_name[0])
-            elif jdk[0] == "-h" or jdk[0] == "-help":
-                print("""
-                    install [jdk-version]           Allows to download the jdk, needs to be specified the version.
-                    use [jdk-version]               Sets the jdk to use, needs the version to be specified.
-                    exit                            close the program.
-
-                    """)
-            elif jdk[0].lower() == "exit":
-                break
 
 
 
