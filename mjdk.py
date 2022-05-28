@@ -89,8 +89,8 @@ def detect_jdk(i):
         i = "jdk-16.0.2"
     elif i == "17.0.2" or i == "17" or i == "jdk17" or i == "jdk=17" or i == "jdk@17":
         i = "jdk-17.0.2"
-    elif i == "18.0.1" or i == "18" or i == "jdk18" or i == "jdk=18" or i == "jdk@18":
-        i = "jdk-18.0.1"
+    elif i == "18.0.1.1" or i == "18" or i == "jdk18" or i == "jdk=18" or i == "jdk@18":
+        i = "jdk-18.0.1.1"
     else:
         print("Enter a valid JDK version.")
         return None
@@ -112,7 +112,7 @@ def install(i, file):
 
         if os.path.exists(jdk_path_file):
             os.remove(jdk_path_file)
-        print("Downloading " + jdk_list[i])
+        print("Downloading " + str(jdk_list[i]))
         wget.download(jdk_list[i], jdk_path_file)
 
     print("Extracting...")
