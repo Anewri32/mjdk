@@ -1,6 +1,11 @@
 import os
 import sys
-import wget
+try:
+    import wget
+except ModuleNotFoundError:
+    import subprocess as cmd
+    cmd.call("pip install wget")
+
 import zipfile
 import tarfile
 from subprocess import call
