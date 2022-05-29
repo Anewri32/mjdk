@@ -45,7 +45,7 @@ def run():
             print("""
                 install [jdk-version]           Allows to download the jdk, needs to be specified the version.
                 use [jdk-version]               Sets the jdk to use, needs the version to be specified.
-                exit                            close the program.
+                exit                            Close the program.
 
                 """)
             continue
