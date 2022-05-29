@@ -101,7 +101,7 @@ def ruta():
 
 
 def install(i, file):
-    if os.path.exists(ruta() + "/" + i):
+    if os.path.exists(ruta() + "\\" + i):
         print("The jdk is already installed.\n")
         return
     else:
@@ -121,7 +121,7 @@ def install(i, file):
 
 
 def use(jdk_name):
-    jdk_path = ruta() + "/" + jdk_name
+    jdk_path = ruta() + "\\" + jdk_name
     if not os.path.exists(jdk_path):
         print("Error, jdk is not installed.")
         return False
@@ -132,10 +132,10 @@ def use(jdk_name):
 
 
 def extract_tar(jdk_name):
-    jdk_path_file = ruta() + "/" + jdk_name
+    jdk_path_file = ruta() + "\\" + jdk_name
     z = tarfile.open(jdk_path_file)
     try:
-        z.extractall(ruta() + "/")
+        z.extractall(ruta() + "\\")
         return True
     except Exception as e:
         print("Error", e)
@@ -144,10 +144,10 @@ def extract_tar(jdk_name):
 
 
 def extract_zip(jdk_name):
-    jdk_path_file = ruta() + "/" + jdk_name
+    jdk_path_file = ruta() + "\\" + jdk_name
     z = zipfile.ZipFile(jdk_path_file, "r")
     try:
-        z.extractall(pwd=None, path=(ruta() + "/"))
+        z.extractall(pwd=None, path=(ruta() + "\\"))
         return True
     except Exception as e:
         print("Error", e)
