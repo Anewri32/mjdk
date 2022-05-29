@@ -1,16 +1,15 @@
 # Manager JDK
 
 ## Instalation
-Para instalar el Manager, solo es necesario ejecutar el archivo [`install.bat`](https://github.com/anewri32/mjdk/blob/main/install.bat) o ejecutar la siguiente instruccion en la consola o terminal:
+To install the Manager, it is only necessary to execute the file [`install.bat`](https://github.com/anewri32/mjdk/blob/main/install.bat) or execute the following instruction in the console or terminal:
 ```commandline
 setx MJDK_HOME %cd%
 setx PATH "%PATH%";"%MJDK_HOME%"
 ```
-La terminal se debe de ubicar en la ubicacion donde se descargo Manager JDK
+The terminal must be located in the location where Manager JDK was downloaded.
 
 ## Use
-El manager JDK tiene usos limitados por el momento, los cuales son los siguientes:
-### In Windows CMD
+The JDK manager has limited uses at the moment, which are as follows:
 ```commandline
 mjdk
 install jdk11
