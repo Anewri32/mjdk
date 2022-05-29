@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import zipfile
 import tarfile
 from subprocess import call
@@ -101,13 +102,14 @@ def ruta():
 
 
 def install(i, file):
-    if os.path.exists(ruta() + "/" + i):
+    if os.path.exists(ruta() + "\\" + i):
         print("The jdk is already installed.\n")
         return
     else:
-        jdk_path_file = ruta() + "/" + i + file
-        if os.path.exists(jdk_path_file):
-            os.remove(jdk_path_file)
+        jdk_path = ruta() + "\\" + i
+        jdk_path_file = jdk_path + file
+        if os.path.exists(jdk_path):
+            os.remove(jdk_path)
         print("Downloading " + str(jdk_list[i]))
         wget.download(jdk_list[i], jdk_path_file)
     print("Extracting...")
@@ -121,7 +123,7 @@ def install(i, file):
 
 
 def use(jdk_name):
-    jdk_path = ruta() + "/" + jdk_name
+    jdk_path = ruta() + "\\" + jdk_name
     if not os.path.exists(jdk_path):
         print("Error, jdk is not installed.")
         return False
@@ -131,11 +133,10 @@ def use(jdk_name):
         print(jdk_name + "it is now in use.")
 
 
-def extract_tar(jdk_name):
-    jdk_path_file = ruta() + "/" + jdk_name
-    z = tarfile.open(jdk_path_file)
+def extract_tar(jdk):
+    z = tarfile.open(jdk)
     try:
-        z.extractall(ruta() + "/")
+        z.extractall(ruta() + "\\")
         return True
     except Exception as e:
         print("Error", e)
@@ -143,11 +144,10 @@ def extract_tar(jdk_name):
     z.close()
 
 
-def extract_zip(jdk_name):
-    jdk_path_file = ruta() + "/" + jdk_name
-    z = zipfile.ZipFile(jdk_path_file, "r")
+def extract_zip(jdk):
+    z = zipfile.ZipFile(jdk, "r")
     try:
-        z.extractall(pwd=None, path=(ruta() + "/"))
+        z.extractall(pwd=None, path=(ruta() + "\\"))
         return True
     except Exception as e:
         print("Error", e)
