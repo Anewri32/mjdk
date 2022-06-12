@@ -1,14 +1,13 @@
 import os
 import sys
-import time
 import zipfile
 import tarfile
-from subprocess import call
+import subprocess
 
 try:
     import wget
 except ModuleNotFoundError:
-    call("pip install wget")
+    subprocess.run("pip install wget")
     import wget
 
 # ------------------VARIABLES----------------------------------------------------------
@@ -102,15 +101,15 @@ def ruta():
 
 
 def install(i, file):
-    if os.path.exists(ruta() + "\\" + i):
+    jdk_path = ruta() + "\\" + i
+    jdk_path_file = jdk_path + file
+    if os.path.exists(jdk_path):
         print("The jdk is already installed.\n")
         return
     else:
-        jdk_path = ruta() + "\\" + i
-        jdk_path_file = jdk_path + file
-        if os.path.exists(jdk_path):
-            os.remove(jdk_path)
-        print("Downloading " + str(jdk_list[i]))
+        if os.path.exists(jdk_path_file):
+            os.remove(jdk_path_file)
+        print("Downloading " + jdk_list[i])
         wget.download(jdk_list[i], jdk_path_file)
     print("Extracting...")
     if file == ".zip":
@@ -126,34 +125,41 @@ def use(jdk_name):
     jdk_path = ruta() + "\\" + jdk_name
     if not os.path.exists(jdk_path):
         print("Error, jdk is not installed.")
-        return False
     else:
-        call('setx JAVA_HOME "' + jdk_path + '"')
-        call('setx PATH "%PATH%";"%JAVA_HOME%/bin"')
-        print(jdk_name + "it is now in use.")
+        filename = "Use.bat"
+        file = open(filename, "w")
+        file.write('''
+        setx JAVA_HOME "''' + jdk_path + '''"
+        setx PATH "%Path%";"%JAVA_HOME%\\bin"
+        ''')
+        file.close()
+        subprocess.run(filename)
+        os.remove(filename)
+
+        print(jdk_name + "it is now in use.\n")
 
 
 def extract_tar(jdk):
     z = tarfile.open(jdk)
     try:
         z.extractall(ruta() + "\\")
+        z.close()
         return True
     except Exception as e:
         print("Error", e)
+        z.close()
         return False
-    z.close()
-
 
 def extract_zip(jdk):
     z = zipfile.ZipFile(jdk, "r")
     try:
         z.extractall(pwd=None, path=(ruta() + "\\"))
+        z.close()
         return True
     except Exception as e:
         print("Error", e)
+        z.close()
         return False
-    z.close()
-
 
 if __name__ == '__main__':
     run()
