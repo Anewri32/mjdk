@@ -1,7 +1,7 @@
 import os
-
 import wget
 import hashlib
+
 
 def download_file(file_to_download, path_to_file):
     if os.path.exists(path_to_file):
@@ -10,14 +10,16 @@ def download_file(file_to_download, path_to_file):
     wget.download(file_to_download, path_to_file)
     print("Downloaded file")
 
+
 def SHA256_Checksum(ruta):
     h = hashlib.sha256()
     with open(ruta, 'rb', buffering=0) as f:
-        for b in iter(lambda : f.read(128*1024), b''):
+        for b in iter(lambda: f.read(128 * 1024), b''):
             h.update(b)
     return h.hexdigest()
 
-def Check_SHA256_With_File(file, sha256):
+
+def Compare_SHA256(file, sha256):
     if sha256.__contains__("http"):
         url = sha256
         temp_file_name = "sha256Temp.sha256"
