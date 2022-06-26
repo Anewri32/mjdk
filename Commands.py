@@ -55,6 +55,7 @@ class Command(JdkData.JDK):
         if not os.path.exists(jdk_path):
             print("Error, jdk is not installed.")
         else:
+            print("path jdk: " + jdk_path)
             VarEnvironment.setx_var("JAVA_HOME", jdk_path)
             VarEnvironment.setx_add_path("%JAVA_HOME%\\bin")
             print(jdk[2] + " it is now in use.\n")
