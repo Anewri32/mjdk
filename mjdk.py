@@ -15,7 +15,7 @@ def run():
                 break
     else:
         print("Error, Operating System not support \n"
-              "This tool only work in Windows operating system whit architecture 64Bit")
+              "This tool only work in Windows operating system with architecture 64Bit")
 
 
 if __name__ == '__main__':

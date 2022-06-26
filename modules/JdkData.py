@@ -111,7 +111,7 @@ class JDK:
                             exctention = ".tar.gz"
                         elif ".zip" in value2[0]:
                             exctention = ".zip"
-                        # 0 = JDK-versions, 1 = url, 2 = jdk-name, 3 = extencion of file to download and descompres.
+                        # 0 = JDK-versions, 1 = url, 2 = jdk-name, 3 = extencion of file to download and descompress.
                         return (key2, value2, "jdk-" + key2, exctention)
         print("Error, JDK version not found")
 
