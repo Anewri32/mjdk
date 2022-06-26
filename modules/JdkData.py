@@ -99,14 +99,7 @@ class JDK:
         }
 
     def __extaer_prefijo_jdk(self, command_jdk):
-        prefijos_jdk = ("jdk=", "jdk@", "jdk")
-        if command_jdk.__contains__(prefijos_jdk[0]):
-            command_jdk.removeprefix(prefijos_jdk[0])
-        elif command_jdk.__contains__(prefijos_jdk[1]):
-            command_jdk.removeprefix(prefijos_jdk[1])
-        elif command_jdk.__contains__(prefijos_jdk[2]):
-            command_jdk.removeprefix(prefijos_jdk[2])
-        return command_jdk
+        return command_jdk.removeprefix("jdk=").removeprefix("jdk@").removeprefix("jdk")
 
     def detect_jdk(self, jdk):
         jdk = self.__extaer_prefijo_jdk(jdk)
@@ -114,9 +107,9 @@ class JDK:
             if key1 in jdk:
                 for key2, value2 in value1.items():
                     if key2.__eq__(jdk):
-                        if ".tar.gz" in value2:
+                        if ".tar.gz" in value2[0]:
                             exctention = ".tar.gz"
-                        elif ".zip" in value2:
+                        elif ".zip" in value2[0]:
                             exctention = ".zip"
                         # 0 = JDK-versions, 1 = url, 2 = jdk-name, 3 = extencion of file to download and descompres.
                         return (key2, value2, "jdk-" + key2, exctention)

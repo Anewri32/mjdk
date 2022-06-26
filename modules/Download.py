@@ -23,8 +23,9 @@ def Compare_SHA256(file, sha256):
     if sha256.__contains__("http"):
         url = sha256
         temp_file_name = "sha256Temp.sha256"
+        print("Downloading SHA256 file to check")
         download_file(url, temp_file_name)
-
+    print("Checking SHA256")
     temp_file = open(temp_file_name, "r")
     sha256 = temp_file.read()
     temp_file.close()
@@ -32,6 +33,8 @@ def Compare_SHA256(file, sha256):
 
     file_sha256 = SHA256_Checksum(file)
     if file_sha256.__eq__(sha256):
+        print("File validated whit SHA256")
         return True
     else:
+        print("Error, fail SHA256 check")
         return False
