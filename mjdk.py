@@ -7,9 +7,9 @@ from modules import VarEnvironment, Download, Compress, JdkData
 def run():
     while True:
         command = input("Enter the mjdk command:")
-        if "install" in command:
+        if "install " in command:
             jdk = ("install", command.removeprefix("install "))
-        elif "use" in command:
+        elif "use " in command:
             jdk = ("use", command.removeprefix("use "))
         elif command == "-h" or command == "-help":
             print("""
@@ -36,7 +36,7 @@ def run():
 def detect_jdk(i):
     i = i.lower()
     file = ".zip"
-    if i == "9.0.4" or i == "9" or i == "jdk9" or i == "jdk=9" or i == "jdk@9":
+    if i == "9":
         i = "jdk-9.0.4"
         file = ".tar.gz"
     elif i == "10.0.2" or i == "10" or i == "jdk10" or i == "jdk=10" or i == "jdk@10":
@@ -59,10 +59,14 @@ def detect_jdk(i):
     elif i == "18.0.1.1" or i == "18" or i == "jdk18" or i == "jdk=18" or i == "jdk@18":
         i = "jdk-18.0.1.1"
     else:
+        for key, value in JdkData.jdk_versions:
+            if i in value:
+                break
+    if i:
+        return i, file
+    else:
         print("Enter a valid JDK version.")
         return None
-    return i, file
-
 
 def ruta():
     if hasattr(sys, '_MEIPASS'):

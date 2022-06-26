@@ -10,6 +10,10 @@ jdk_list = {
     "jdk-17.0.2": "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip",
     "jdk-18.0.1.1": "https://download.java.net/java/GA/jdk18.0.1.1/65ae32619e2f40f3a9af3af1851d6e19/2/GPL/openjdk-18.0.1.1_windows-x64_bin.zip",
 }
+jdk_versions = {
+    "jdk-9.0.4": ("9.0.4", "jdk9", "jdk=9", "jdk=9.0.4", "jdk@9", "jdk@9.0.4")
+}
+print(jdk_versions)
 # jdk_list de prueba
 """
 jdk_list = {
