@@ -5,7 +5,7 @@ import subprocess
 def setx_var(var_name, var_value):
     filename = "setxVar.bat"
     file = open(filename, "w")
-    file.write('setx %' + var_name + '% "' + var_value + '"')
+    file.write('setx ' + var_name + ' "' + var_value + '"')
     file.close()
     subprocess.run(filename)
     os.remove(filename)
